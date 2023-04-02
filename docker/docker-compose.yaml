@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/de/project/db:/var/lib/mysql
+    command: '--default-authentication-plugin=mysql_native_password'
+    networks:
+      - net
+
+  php:
+    build:
+      context: .
+    container_name: php
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    env_file: .env
+    volumes:
+      - /home/de/project/html:/var/www/html
+    networks:
+      - net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    container_name: phpmyadmin
+    env_file: .env
+    environment:
+      PMA_HOST: mysql
+#      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+#      - "9000:9000"
+    networks:
+      - net
+
+  nginx:
+    image: nginx
+    depends_on:
+      - php
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - /home/de/project/html:/var/www/html
+      - /home/de/project/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
