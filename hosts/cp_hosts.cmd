@@ -3,7 +3,7 @@ set /p IP=
 
 copy /y hosts.sav hosts.out>nul
 
-for /L %%i IN (1 1 10) do echo %IP% website%%i.com>>hosts.out
+for /L %%i IN (0 1 10) do echo %IP% website%%i.com>>hosts.out
 
 : настроить drweb, чтобы пропускал cmd на корректировку hosts
 

@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# start LEMP
+# start LEMP with docker compose
+# recoment for "docker compose" or docker-compose
 docker compose -f ./docker/docker-compose.yaml up -d
+# docker-compose -f ./docker/docker-compose.yaml up -d
 
 # wait for LEMP initializing
-SLEEP_TIME=10s
+SLEEP_TIME=30s
 echo -e "\nWait $SLEEP_TIME \bec for LEMP initializing ...\n"
 sleep "$SLEEP_TIME"
 
