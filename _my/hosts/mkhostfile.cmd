@@ -1,1 +1,0 @@
-getline 1 D:\_devops\ip|cp_hosts
